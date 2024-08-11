@@ -11,9 +11,9 @@ public class LL {
 
     private Node head;
 
-    // public LL() {
-    //     this.head = null;
-    // }
+    public LL() {
+        this.head = null;
+    }
     
     //add element to start of list 
     public void addFirst( String data) {
@@ -56,12 +56,48 @@ public class LL {
         System.out.println("null");
     }
 
+    //delete first element
+    public void deleteFirst() {
+        if(head == null) {
+            System.out.println("List is Empty");
+            return;
+        }
+
+        head = head.next;
+    }
+
+    //delete last element of linked list
+    public void deleteLast() {
+        if(head == null) {
+            System.out.println("List is Empty");
+            return;
+        }
+
+        if(head.next == null) {
+            head = null;
+            return;
+        }
+
+        Node lastNode = head.next;
+        Node secondLastNode = head;
+        while(lastNode.next != null) {
+            lastNode = lastNode.next;
+            secondLastNode = secondLastNode.next;
+        }
+
+        secondLastNode.next = null;
+    }
+
     public static void main(String[] args) {
         LL list = new LL();
         list.addFirst("This");   
         list.addLast("is");
         list.addLast("a");
         list.addLast("list");
+        list.printList();
+        list.deleteFirst();
+        list.printList();
+        list.deleteLast();
         list.printList();
     }
 }
