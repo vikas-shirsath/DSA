@@ -10,6 +10,7 @@ class Solution {
             num = num + current;
             count ++;
         }
+        
         return num;
     }
 }
