@@ -1,6 +1,6 @@
 class Solution {
     public String minWindow(String s, String t) {
-        if (s.length() < t.length()) return "";
+        if (s.length() < t.length()) { return "";}
 
         Map<Character, Integer> tMap = new HashMap<>();
         for(char c : t.toCharArray())
@@ -35,9 +35,9 @@ class Solution {
 
                 left++;
             }
+
             right++;
         }
-
         return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
     }
 }
