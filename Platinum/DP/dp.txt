@@ -1,0 +1,68 @@
+ways to solve dp problems
+
+memoization : 
+ top down approach
+ caches the result of function calls 
+ recursive implementation
+ well suited for problems with relatively small set of inputs.
+
+ example: 
+	static int fib( int n, Map<Integer, Integer> caches) {
+		if(caches.containsKey(n)) 
+			return caches.get(n);
+
+		int result;
+		if(n ==0) 
+			result = 0;
+		else if( n==1)
+			result = 1;
+		else 
+			result = fib(n-1, cache) + fib(n-2, cache);
+		
+		cache.put(n, result);
+		return result;
+	}
+
+
+
+tabulation :
+	bottom up approach
+	stress the result of subproblems in a table
+	Iterative implementation
+	well suited for problems with a large set of data
+
+
+example :
+	
+	int fib[];
+	fib[0] = 0
+
+
+
+questions:
+	LCS
+	0-1 knapsack
+	subset sum
+	matrix chain multiplication
+	minimum cost to reach the end of array
+	coin change
+	edit distance
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
