@@ -1,0 +1,42 @@
+//Recurssive approach
+
+class Solution {
+    public:
+        int longestCommonSubsequence(string text1, string text2) {
+            return LCS(text1, text2, text1.length(), text2.length());
+        }
+
+        //cannot use recurrsion it will give tle
+        int LCS(string s1, string s2, int l1, int l2) {
+            if(l1 == 0 || l2 == 0) {
+                return 0;
+            }
+
+            if(s1[l1 - 1] == s2[l2 - 1])
+                return 1 + 
+        }
+}
+
+
+
+
+//Iterative approach
+
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        int n = text1.length(), m = text2.length();
+        int dp[][] = new int[n+1][m+1];
+
+        for(int i = 1; i < n; i++) {
+            for(int j = 1; j < m; j++) {
+                if(text1.charAt(i - 1) == text2.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.max(dp[i-j][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        return dp[n][m];
+    }
+}
