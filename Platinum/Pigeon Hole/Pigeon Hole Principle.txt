@@ -1,0 +1,24 @@
+Pigeon Hole Principle :
+	if you put more than n objects into n containers, then at least one container must hold more than one object.
+
+if k > n objects are placed into n boxes, then at least one box contains at least [k/n] objects.
+
+example:
+	if you have 13 socks and 12 drawers, at least one drawer must have 2 or more socks.
+
+example : 
+	if k objects are placed into n containers, then at least one container has at least [k/n] objects.
+
+k = 100, n = 9
+
+Pigeon Hole Sort : 
+arr = {3, 2, 1, 4, 1, 2, 3, 6, 3, 4, 5}
+min = 1
+max = 6
+
+int newArray[] = new int[max-min+1]
+
+0 1 2 3 4 5 index
+2 2 3 2 1 1 elements (frequency)
+
+1 1 2 2 3 3 3 4 4 5 6

@@ -1,0 +1,21 @@
+kadane's Algo : is a dynamic programming technique used to find the maximum subarray sum in an array of numbers on O(n).
+
+algo : 
+1. Initialize maxSum = arr[0], the largest sum found so far, currentSum = 0, the sum of current subarray.
+2. Iterate through the array,
+	add the current element to currentSum,
+	If currentSum > maxSum, update maxSum
+	if currentSum < 0, reset the currentsum = 0 (start new subarray)
+3. Return maxSum.
+
+int kadanesMaxSum(int []arr) {
+	int maxSum = Integer.MIN_VLAUE;
+	int currSum = 0;
+	for(int n : nums) {
+		currSum += n;
+		if(currSum > maxSum)
+			maxSum = currSum;
+		if(currSum < 0)
+			currSum = 0;
+	}
+}

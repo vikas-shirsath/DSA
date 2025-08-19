@@ -1,0 +1,87 @@
+b. Variable Size
+leetcode 3. Longest Substring without repeating characters
+
+Input : s = "abcabcbb"
+Output : 3
+
+class Solution {
+    puplic int LenghtOfLongestSubstring(String s) {
+        HashMap <character, Integer> hm = new HashMap<>();
+        int maxLen = 0; start  = 0;
+
+        for(int end = 0; i < s.length(); end++) {
+            char ch = s.charAt(end);
+
+            if(hm.containsKey(ch) && hm.get(ch) >= start)
+                start = hm.get(ch) + 1;
+
+            map.put(ch, end);
+
+            maxLen = Math.max(end - start + 1, maxLen)
+        }
+        return maxLen;
+    }
+}
+
+
+leetcode 438: Find all anagrams in a String
+
+Input : cbaebabacd
+output : [0, 6]
+
+//Frequency Array
+
+class solution {
+public:
+	vector<int> findAnagrams(string s, string p) {
+		vector<int> res;
+		if(p.length() > s.length())
+			return res;
+
+		vector<int> freq(26, 0);
+	
+		for(ch : p)
+			freq[c - 'a']++;
+		
+		int left = 0, right = 0;
+		int charsToMatch = p.size();
+		
+		while(right<s.size()) {
+			if(freq[s[right]-'a']-- > 0
+				charsToMatch--;
+
+			if(right - left + 1 = p.size()) {
+				if(charToMatch == 0)
+					res.push_back(left);
+				
+				if(freq[s[left]-'a']++ >=0)
+					charsToMatch++;
+
+				left++;	
+		}
+		right++;
+	}
+	return res;
+}
+
+
+
+
+
+leetcode 76.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

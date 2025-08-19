@@ -1,0 +1,43 @@
+0/1knapsack
+either include or exclude
+cannot fractionalised it 
+
+pr = 40 50 120
+wt = 4  8  16
+sack = 24
+
+p1  p2  p3
+0   0   0   0
+0   0   1   120
+0   1   0   50
+0   1   1   170
+1   0   0   40
+1   0   1   160
+1   1   1   NA
+
+
+int knapsack(int s, int pr[], int wt[], int n) {
+    if(n==0 || s==0)
+        return 0;
+
+    if(wt[n-1] > s) {
+        return knapsack(s, pr, wt, n-1);
+    } else {
+        return Math.max(knapsack(s, pr, wt, n-1), knapsack(s-wt[n-1], pr, wt, n-1));
+    }
+}
+
+//using dp
+//memoized Approach
+int knapsack(int s, int pr[], int wt[], int n, dp[][]) {
+    if(n==0 || s==0)
+        return 0;
+    if(dp[n][s] != -1)
+        return dp[n][s];
+
+    if(wt[n-1] > s) {
+        return dp[n][s] = knapsack(s, pr, wt, n-1);
+    } else {
+        return dp[n][s] = Math.max(knapsack(s, pr, wt, n-1), knapsack(s-wt[n-1], pr, wt, n-1));
+    }
+}
