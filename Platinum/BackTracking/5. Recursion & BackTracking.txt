@@ -1,0 +1,427 @@
+#Recursion
+1. Direct Recursion
+	a. Head Recursion: Print 1 to 10
+		fun(int n){
+			if(n==0)
+				return 0;
+			fun(n-1);
+			cout << n;
+		}
+	b. Tail Recursion: Print 10 to 1
+		fun(int n){
+			if(n==0)
+				return 0;
+			cout << n;
+			fun(n-1);
+		}
+
+	c. Tree Recursion
+		fun(int n){
+			if(n==0)
+				return 0;
+			if(n==1)
+				return 1;
+			return fun(n-1)+fun(n-2);
+		}
+
+2. Indirect Recursion
+void fun1(int n){
+    if(n <= 0) return;
+    cout << n << " ";
+    fun2(n-1);
+}
+
+void fun2(int n){
+    if(n <= 0) return;
+    cout << n << " ";
+    fun1(n-2);
+}
+
+
+
+
+
+#Backtracking
+		100
+	20		30
+   200     300			1
+
+Cost of route 1: 320
+Cost of route 2: 420
+Cost of route 3: 131
+
+
+Algorithm:
+backtrack(x)
+	if x in not a solution
+		return false
+	if x is a solution
+		add to list of solution
+	backtrack(expand x)
+
+
+
+1. Problem Statement:
+You want to find all the possible ways of arranging 2 boys and 1 girls on 3 benches. Constraint: Girl should not be on the middle bench.
+
+Solution: There are total of 3! = 6 possibilities. We will try all the possibilities and get the possible solutions. 
+
+String[] = {"B1", "B2", "G"}
+
+B1 B2 G
+
+
+All the possibilities are:
+B1 B2 G		: is a solution
+B1 G B2 	: not a solution
+B2 B1 G 	: is a solution
+B2 G B1 	: not a solution
+G B1 B2 	: is a solution
+G B2 B1 	: is a solution
+
+
+class Main{
+	public static void main(String args[]){
+		String arr[] = {"B1", "B2", "G"};
+		arrangments(arr, 0);
+	}
+	static void arrangments(String arr[], int index){
+		if(index==arr.length){
+			if(!arr[1].equals("G")){
+				for(String s: arr)
+					System.out.print(s+ " ");
+				System.out.println();
+			}
+		}
+		else{
+			for(int i=index ; i<arr.length ; i++){
+				swap(arr, i, index);
+				arrangments(arr,index+1);
+				swap(arr, i, index); //Backtrack
+			}
+		}
+			
+	}
+	static void swap(String arr[], int i, int index){
+		String temp = arr[i];
+		arr[i] = arr[index];
+		arr[index]=temp;
+	}
+}
+
+Recursion Tree:
+arrangements([B1, B2, G], 0)
+├── i=0 swap(0,0) → [B1, B2, G]
+│   └── arrangements([B1, B2, G], 1)
+│       ├── i=1 swap(1,1) → [B1, B2, G]
+│       │   └── arrangements([B1, B2, G], 2)
+│       │       └── i=2 swap(2,2) → [B1, B2, G]
+│       │           └── arrangements([B1, B2, G], 3)  print "B1 B2 G"
+│       └── i=2 swap(2,1) → [B1, G, B2]
+│           └── arrangements([B1, G, B2], 2)
+│               └── i=2 swap(2,2) → [B1, G, B2]
+│                   └── arrangements([B1, G, B2], 3)  skip (G in middle)
+│
+├── i=1 swap(1,0) → [B2, B1, G]
+│   └── arrangements([B2, B1, G], 1)
+│       ├── i=1 swap(1,1) → [B2, B1, G]
+│       │   └── arrangements([B2, B1, G], 2)
+│       │       └── i=2 swap(2,2) → [B2, B1, G]
+│       │           └── arrangements([B2, B1, G], 3)  print "B2 B1 G"
+│       └── i=2 swap(2,1) → [B2, G, B1]
+│           └── arrangements([B2, G, B1], 2)
+│               └── i=2 swap(2,2) → [B2, G, B1]
+│                   └── arrangements([B2, G, B1], 3)  skip (G in middle)
+│
+└── i=2 swap(2,0) → [G, B2, B1]
+    └── arrangements([G, B2, B1], 1)
+        ├── i=1 swap(1,1) → [G, B2, B1]
+        │   └── arrangements([G, B2, B1], 2)
+        │       └── i=2 swap(2,2) → [G, B2, B1]
+        │           └── arrangements([G, B2, B1], 3)  print "G B2 B1"
+        └── i=2 swap(2,1) → [G, B1, B2]
+            └── arrangements([G, B1, B2], 2)
+                └── i=2 swap(2,2) → [G, B1, B2]
+                    └── arrangements([G, B1, B2], 3)  print "G B1 B2"
+
+
+
+
+
+2. nQeens Problem:
+n = 4;
+
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+
+public class Main {
+    static boolean flag;
+	public static void main(String args[]) {
+		int n = 4;
+		int board[][] = new int[n][n];
+		buildBoard(board, 0);
+	}
+	static void printBoard(int board[][]) {
+		for(int i=0 ; i<board.length ; i++) {
+			for(int j=0 ; j<board.length ; j++)
+				System.out.print(board[i][j]+" ");
+			System.out.println();
+		}
+		System.out.println();
+	}
+	static void buildBoard(int board[][], int col) {
+		if(col==board.length){
+		    if(!flag){
+    		        flag=true;
+	    		printBoard(board);
+		    }
+		    return;
+		}
+
+		for(int row=0 ; row<board.length ; row++) {
+			if(isSafe(board, row, col)) {
+				board[row][col]=1;
+				buildBoard(board,col+1);
+				board[row][col]=0;
+			}
+		}
+	}
+
+	static boolean isSafe(int board[][], int row, int col) {
+		//Upper Left Direction
+		for(int i=row, j=col ; i>=0 && j>=0 ; i--, j--)
+			if(board[i][j]==1)
+				return false;
+
+		//Left Direction
+		for(int i=0 ; i<col ; i++)
+			if(board[row][i]==1)
+				return false;
+
+		//Lower Left Direction
+		for(int i=row, j=col ; i<board.length && j>=0 ; i++, j--)
+			if(board[i][j]==1)
+				return false;
+		return true;
+	}
+
+}
+
+
+
+51. N-Queens
+class Solution {
+public:
+	vector<vector<string>> solveNQueens(int n) {
+		vector<vector<string>> res;
+		vector<string> board(n, string(n, '.'));
+		buildBoard(board, res, 0, n);
+		return res;
+	}
+	void buildBoard(vector<string>& board, vector<vector<string>>& res, int row, int n){
+		if(row==n){
+			res.push_back(board);
+			return;
+		}
+		for(int col=0 ; col<n ; col++){
+			if(isSafe(board, row, col, n)){
+				board[row][col] = 'Q';
+				buildBoard(board, res, row+1, n);
+				board[row][col] = '.';
+			}
+		}
+	}
+	bool isSafe(vector<string>& board, int row, int col, int n){
+		//Upper Direction
+		for(int i=0 ; i<row ; i++)
+			if(board[i][col]=='Q')
+				return false;
+
+		//Upper Left Direction
+		for(int i=row, j=col ; i>=0 && j>=0 ; i--, j--)
+			if(board[i][j]=='Q')
+				return false;
+
+		//Upper Right Direction
+		for(int i=row, j=col ; i>=0 && i<n ; i--, j++)
+			if(board[i][j]=='Q')
+				return false;
+		return true;
+	}
+};
+
+
+52. N-Queens II
+class Solution {
+public:
+    int res;
+    int totalNQueens(int n) {
+  		vector<string> board(n, string(n, '.'));
+		buildBoard(board, 0, n);
+		return res;
+    }
+	void buildBoard(vector<string>& board, int row, int n){
+		if(row==n){
+            res++;
+			return;
+		}
+		for(int col=0 ; col<n ; col++){
+			if(isSafe(board, row, col, n)){
+				board[row][col] = 'Q';
+				buildBoard(board, row+1, n);
+				board[row][col] = '.';
+			}
+		}
+	}
+	bool isSafe(vector<string>& board, int row, int col, int n){
+		//Upper Direction
+		for(int i=0 ; i<row ; i++)
+			if(board[i][col]=='Q')
+				return false;
+
+		//Upper Left Direction
+		for(int i=row, j=col ; i>=0 && j>=0 ; i--, j--)
+			if(board[i][j]=='Q')
+				return false;
+
+		//Upper Right Direction
+		for(int i=row, j=col ; i>=0 && i<n ; i--, j++)
+			if(board[i][j]=='Q')
+				return false;
+		return true;
+	}
+};
+
+
+Problem Statement: Rat in Maze (Only two Direction Right and Down).
+Solution 1: Print True or False
+Solution 2: Count number of steps to reach end of array
+Solution 3: Count number of ways to reach end of array
+Solution 4: Print the Directions
+
+1 1 1 0 1 0
+1 0 1 0 0 1
+1 0 1 1 1 0
+0 1 1 1 0 1
+1 1 0 1 1 1
+
+import java.util.*;
+class Main{
+    //static boolean flag;
+    //static int finalCount;
+    //static int totalWays;
+    public static void main(String args[]){
+        int arr[][] = {{1, 1, 1, 1, 1, 1},
+                       {1, 0, 1, 0, 0, 1},
+                       {1, 0, 1, 0, 1, 1},
+                       {1, 0, 1, 0, 0, 1},
+                       {1, 1, 1, 1, 1, 1}};
+        int count=0;
+    	ArrayList<String> res = new ArrayList<>();
+        maze(arr, 0, 0, arr.length, arr[0].length, count, new StringBuilder(), res);
+        // System.out.println(flag);
+        // System.out.println(finalCount);
+        // System.out.println(totalWays);
+        for(String s: res)
+		    System.out.println(s);
+
+    }
+    static void  maze(int arr[][], int row, int col, int n, int m, int count, StringBuilder temp, ArrayList<String>res){
+    	if(row==n-1 && col ==m-1){
+    		//flag=true;
+    		//finalCount=count;
+    		//totalWays++;
+			res.add(temp.toString());
+    		return;
+    	}
+    	if(row+1!=n && arr[row+1][col]==1){
+    	    temp.append("D");
+    	    //count++;
+    		maze(arr, row+1, col, n, m, count, temp, res);
+    		//count--;
+			temp.deleteCharAt(temp.length()-1);
+    	}
+    
+    	if(col+1!=m && arr[row][col+1]==1){
+    	    temp.append("R");
+    	    //count++;
+    		maze(arr, row, col+1, n, m, count, temp, res);
+            //count--;
+            temp.deleteCharAt(temp.length()-1);
+    	}
+    }
+}
+
+
+46. Permutations
+Input: nums = [1,2,3]
+Output: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+
+C++:
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> result;
+        vector<int> temp;
+        vector<bool> used(nums.size(), false);
+        backtrack(nums, used, temp, result);
+        return result;
+    }
+
+	void backtrack(vector<int>& nums, vector<bool>& used, vector<int>& temp, vector<vector<int>>& result){
+		if(temp.size()==nums.size()){
+			result.push_back(temp);
+			return;
+		}
+
+		for(int i=0 ; i<nums.size() ; i++){
+			if(used[i])
+				continue;
+
+			used[i] = true;
+			temp.push_back(nums[i]);
+			backtrack(nums, used, temp, result);
+			temp.pop_back();
+			used[i]=false;
+		}
+	}
+};
+
+Java:
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(nums, new ArrayList<>(), result);
+        return result;
+    }
+    private void backtrack(int[] nums, List<Integer> tempList, List<List<Integer>> result) {
+        if (tempList.size() == nums.length) {
+            result.add(new ArrayList<>(tempList));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (tempList.contains(nums[i])) continue; // Skip used numbers
+            tempList.add(nums[i]);
+            backtrack(nums, tempList, result);
+            tempList.remove(tempList.size() - 1); // Backtrack
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

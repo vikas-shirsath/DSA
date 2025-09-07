@@ -22,3 +22,87 @@ int newArray[] = new int[max-min+1]
 2 2 3 2 1 1 elements (frequency)
 
 1 1 2 2 3 3 3 4 4 5 6
+
+
+
+Algo : 
+1. read int k and n
+2. if n==0 return 0
+3. apply formula : minObjects:  [k/n]
+4. print minObjects.
+
+
+static int minObj(int n, int k) {
+	if(n == 0)
+		return 0;
+	
+	int minObjects = (k/n)+1;
+	//int minObjects = (k + n - 1)/n;
+	return minObjects;
+}
+
+
+
+
+
+
+
+
+
+
+Question : find first missing number
+
+arr =
+min = 2
+max = 9
+
+arr[] = new arr[8]
+
+//find the first missing number
+
+arr = {2,7,9,3,4,8};
+//using pegionhole sorting
+
+int missign_num(vector<int> arr){
+    int n = arr.length();
+    int min = INT_MAX;
+    int max = INT_MIN;
+    for(int i =0; i<n; i++){
+        if(arr[i]>max){
+            max= arr[i];
+        }
+        if(arr[i]<min){
+            min= arr[i];
+        }
+
+    }
+    int range = max-min+1;
+    vector<int> phole(0,range);
+
+
+    //fill the ne array with the freq
+    for(int i =0; i<n; i++);
+    phole[arr[i]-min]++;
+
+    //fill the index with freq zero 
+    for(int i =0; i< range ; i++){
+        if(phole[i]==0){
+            return i+min;
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
